@@ -32,6 +32,7 @@ HEADERS += \
     include/SrmApplication.h \
     include/ThreadWrapper.h \
     include/TimeMeasurements.h \
+    include/AhoKorasic.h
 
 SOURCES += \
     src/AppConfig.cpp \
@@ -46,6 +47,7 @@ SOURCES += \
     src/NfaRaw.cpp \
     src/Re2Postfix.cpp \
     src/SrmApplication.cpp \
+    src/AhoKorasic.cpp
 
 INCLUDEPATH += include
 LIBS += -lpthread
