@@ -67,16 +67,16 @@ std::vector<CF_NFA::CDfa> CF_NFA::CDfa::DfaTableFromNfa(const std::vector<CF_NFA
 
   //fill numbers
   for (size_t current = 0; current < result.size(); ++current) {
-    for (auto j = alp.cbegin(); j != alp.cend(); ++j) {
+    for (auto ch = alp.cbegin(); ch != alp.cend(); ++ch) {
       tmp_lst.clear(); //without changing capacity
       for (auto i = result[current].m_number.begin(); i != result[current].m_number.end(); ++i) {
         result[current].m_is_final |= nfa_table[*i].is_final();
 
-        if (nfa_table[*i].dct_transitions().find(*j) == nfa_table[*i].dct_transitions().end())
+        if (nfa_table[*i].dct_transitions().find(*ch) == nfa_table[*i].dct_transitions().end())
           continue;
 
-        for (auto k = nfa_table[*i].dct_transitions().at(*j).begin();
-             k != nfa_table[*i].dct_transitions().at(*j).end(); ++k) {
+        for (auto k = nfa_table[*i].dct_transitions().at(*ch).begin();
+             k != nfa_table[*i].dct_transitions().at(*ch).end(); ++k) {
           CCommons::add_elem_to_sorted_vector<int>(tmp_lst, *k);
         } //for k
       } //for number size
@@ -87,7 +87,7 @@ std::vector<CF_NFA::CDfa> CF_NFA::CDfa::DfaTableFromNfa(const std::vector<CF_NFA
     } //for j
   } //for current
 
-  std::sort(result.begin(), result.end(), DfaByNumberComparer());
+  std::sort(result.begin(), result.end(), DfaByNumberComparator());
 
   //fill transitions . I think here dot should be processed. and other symbol groups too.
   for (auto cur = result.begin(); cur != result.end(); ++cur) {

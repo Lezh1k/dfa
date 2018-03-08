@@ -25,7 +25,7 @@ namespace CF_NFA {
     void add_to_transition(int index, const int num);
     void init_transitions_arr(void);
 
-    class DfaByNumberComparer {
+    class DfaByNumberComparator {
     public:
       bool operator()(const CDfa& s1, const CDfa& s2) {
         return CCommons::compare_vectors(s1.m_number, s2.m_number) <= 0;

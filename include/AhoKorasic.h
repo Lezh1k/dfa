@@ -5,10 +5,10 @@
 #include <vector>
 #include <string>
 
-class CAhoKorasic {
-private:
-
-  struct vertex_t {
+namespace CF_NFA {
+  class CAhoKorasic {
+  private:
+    struct vertex_t {
       static const int32_t NOT_INITIALIZED = -1;
       static const int32_t ALP_POWER = 256;
 
@@ -26,19 +26,18 @@ private:
       ~vertex_t();
     };
 
-  //todo use some array .
-  std::vector<vertex_t> m_dma;
+    //todo use some array .
+    std::vector<vertex_t> m_dma;
 
-  int32_t go(int32_t v, uint8_t ch);
-  int32_t getLink(int32_t v);
+    int32_t go(int32_t v, uint8_t ch);
+    int32_t getLink(int32_t v);
 
-public:
+  public:
 
-  CAhoKorasic();
-  ~CAhoKorasic();
+    CAhoKorasic();
+    ~CAhoKorasic();
 
-  void addString(const std::vector<uint8_t> &str);
-
+    void addString(const std::vector<uint8_t> &str);
+  };
 }
-
 #endif // AHOKORASIC_H

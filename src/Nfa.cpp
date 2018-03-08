@@ -25,7 +25,8 @@ std::vector<CF_NFA::CNfa> CF_NFA::CNfa::CreateFromRawNfa(const CF_NFA::CNfaRaw &
 {
   std::vector<CNfa> result(nfa_raw.LstStates().size());
   for (size_t i = 0; i < nfa_raw.LstStates().size(); ++i) {
-    if (nfa_raw.LstStates()[i]->signal == CNfaRaw::SS_SPLIT) continue;
+    if (nfa_raw.LstStates()[i]->signal == CNfaRaw::SS_SPLIT)
+      continue;
     result[i].m_number = nfa_raw.LstStates()[i]->index;
     FillNfaTransitions(result[i], nfa_raw.LstStates()[i]);
   }
@@ -38,11 +39,11 @@ void CF_NFA::CNfa::FillNfaTransitions(CF_NFA::CNfa &nfa, const CF_NFA::CNfaRaw::
   if (ss->signal == CNfaRaw::SS_MATCH)
     return;
 
-  const CF_NFA::CNfaRaw::nfa_aux_state_t *out[2] = {ss->out, ss->out1}; //we have out and out 1
+  const CF_NFA::CNfaRaw::nfa_aux_state_t *out[2] = {ss->out, ss->out1, NULL}; //we have out and out 1
   for (int i = 0; i < 2; ++i) {
     if (out[i] == NULL) continue;
 
-    //if ss.out.signal == SS_MATCH || ss.out1.signal == SS_MATHC then ss.is_final = 1;
+    //if ss.out.signal == SS_MATCH || ss.out1.signal == SS_MATCH then ss.is_final = 1;
     nfa.m_is_final |= out[i]->signal == CNfaRaw::SS_MATCH;
 
     switch(out[i]->signal) {

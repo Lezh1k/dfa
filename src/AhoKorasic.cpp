@@ -1,12 +1,13 @@
 #include <string.h>
 #include "AhoKorasic.h"
 
+using namespace CF_NFA;
 //vertex!!
 CAhoKorasic::vertex_t::vertex_t() :
   parent(NOT_INITIALIZED),
-  pCh(NOT_INITIALIZED),
   link(NOT_INITIALIZED),
-  isLeaf(0) {
+  isLeaf(0),
+  pCh(NOT_INITIALIZED) {
 
   memset(next, 0, ALP_POWER*sizeof(int32_t));
   memset(go, 0, ALP_POWER*sizeof(int32_t));
@@ -52,16 +53,16 @@ int32_t CAhoKorasic::go(int32_t v, uint8_t ch) {
       m_dma[v].go[ch] = v == 0 ? 0 : go(getLink(v), ch); //if it's root use root. else use suffix link with current signal
     }
   }
-  return m_dma[v].go[c];
+  return m_dma[v].go[ch];
 }
 //////////////////////////////////////////////////////////////////////////
 
 int32_t CAhoKorasic::getLink(int32_t v) {
   if (m_dma[v].link == vertex_t::NOT_INITIALIZED) { //if we don't have link yet
-    if (v == 0 || m_dma[v].p == 0) { //if it's root - return root
+    if (v == 0 || m_dma[v].parent == 0) { //if it's root - return root
       m_dma[v].link = 0;
     } else {
-      m_dma[v].link = go(getLink(m_dma[v].parent), m_dma[v].pch); //return transition from parrent's suffix link
+      m_dma[v].link = go(getLink(m_dma[v].parent), m_dma[v].pCh); //return transition from parrent's suffix link
     }
   }
   return m_dma[v].link;
